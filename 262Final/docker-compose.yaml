@@ -1,0 +1,29 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.1
+    ports: "2181:2181"
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+
+  redis:
+    image: redis:6.0.6
+    ports: "6379:6379"
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.1
+    ports: "19092:19092"
+
+
+    depends_on:
+      - zookeeper
+
+
+  stedi:
+    image: scmurdock/stedi
+    ports: "4567:4567"
+
+
+    depends_on:
+      - redis
+      - kafka
+
